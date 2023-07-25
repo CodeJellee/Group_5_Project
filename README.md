@@ -307,15 +307,15 @@ Returns all the products.
     }
     ```
 
-### Get all Spots owned by the Current User
+### Get all Products owned by the Current User
 
-Returns all the spots owned (created) by the current user.
+Returns all the products owned (created) by the current user.
 
 * Require Authentication: true
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/spots/current
+  * URL: /api/products/current
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -331,7 +331,7 @@ Returns all the spots owned (created) by the current user.
 
     ```json
     {
-      "Spots": [
+      "Products": [
         {
           "id": 1,
           "ownerId": 1,
