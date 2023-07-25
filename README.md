@@ -335,25 +335,17 @@ Returns all the products owned (created) by the current user.
         {
           "id": 1,
           "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
+          "itemName": "Spiked Collar",
+          "price": 15.99,
+          "description": "Black pleather spiked collar will attract the attention you seek!",
+          "previewImage": "image url",
+          "category": "jewelry",
         }
       ]
     }
     ```
 
-### Get details of a Spot from an id
+### Get details of a Product from an id
 
 Returns the details of a spot specified by its id.
 
@@ -361,7 +353,7 @@ Returns the details of a spot specified by its id.
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/spots/:spotId
+  * URL: /api/products/:productId
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -378,33 +370,28 @@ Returns the details of a spot specified by its id.
     ```json
     {
       "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
+      "itemName": "Spiked Collar",
+      "price": 15.99,
+      "description": "Black pleather spiked collar will attract the attention you seek!",
+      "previewImage": "image url",
+      "category": "jewelry",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36" ,
-      "numReviews": 5,
-      "avgStarRating": 4.5,
-      "SpotImages": [
+      "Reviews": [
         {
           "id": 1,
-          "url": "image url",
-          "preview": true
+          "userId": 1,
+          "star": 4,
+          "review": "looks so cute"
         },
         {
           "id": 2,
-          "url": "image url",
-          "preview": false
+          "userId": 1,
+          "star": 5,
+          "review": "matches my outfit perfectly"
         }
       ],
-      "Owner": {
+      "Seller": {
         "id": 1,
         "firstName": "John",
         "lastName": "Smith"
@@ -412,7 +399,7 @@ Returns the details of a spot specified by its id.
     }
     ```
 
-* Error response: Couldn't find a Spot with the specified id
+* Error response: Couldn't find a Product with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -420,19 +407,19 @@ Returns the details of a spot specified by its id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Product couldn't be found"
     }
     ```
 
-### Create a Spot
+### Create a Product
 
-Creates and returns a new spot.
+Creates and returns a new Product.
 
 * Require Authentication: true
 * Request
   <!--!!START SILENT -->
   * Method: POST
-  * URL: /api/spots
+  * URL: /api/products
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -444,15 +431,12 @@ Creates and returns a new spot.
 
     ```json
     {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
+      "itemName": "Spiked Collar",
+      "price": 15.99,
+      "description": "Black pleather spiked collar will attract the attention you seek!",
+      "quantity": 3,
+      "previewImage": "image url",
+      "category": "jewelry",
     }
     ```
 
@@ -465,18 +449,13 @@ Creates and returns a new spot.
     ```json
     {
       "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "sellerId": 1,
+      "itemName": "Spiked Collar",
+      "price": 15.99,
+      "description": "Black pleather spiked collar will attract the attention you seek!",
+      "quantity": 3,
+      "previewImage": "image url",
+      "category": "jewelry",
     }
     ```
 
@@ -490,29 +469,26 @@ Creates and returns a new spot.
     {
       "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
       "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
+      "itemName": "Item name is required",
+      "price": "Price is required",
+      "description": "Description is required",
+      "quantity": "Quantity is required",
+      "previewImage": "Preview image is required",
+      "category": "Category is required",
       }
     }
     ```
 
-### Add an Image to a Spot based on the Spot's id
+### Add an Image to a Product based on the Products's id
 
-Create and return a new image for a spot specified by id.
+Create and return a new image for a product specified by id.
 
 * Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
+* Require proper authorization: Product must belong to the current user
 * Request
   <!--!!START SILENT -->
   * Method: POST
-  * URL: /api/spots/:spotId/images
+  * URL: /api/products/:productId/images
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -543,7 +519,7 @@ Create and return a new image for a spot specified by id.
     }
     ```
 
-* Error response: Couldn't find a Spot with the specified id
+* Error response: Couldn't find a Product with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -551,112 +527,20 @@ Create and return a new image for a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Product couldn't be found"
     }
     ```
 
-### Edit a Spot
+### Delete a Product
 
-Updates and returns an existing spot.
+Deletes an existing product.
 
 * Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  <!--!!START SILENT -->
-  * Method: PUT
-  * URL: /api/spots/:spotId
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error Response: Body validation error
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Delete a Spot
-
-Deletes an existing spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
+* Require proper authorization: Product must belong to the current user
 * Request
   <!--!!START SILENT -->
   * Method: DELETE
-  * URL: /api/spots/:spotId
+  * URL: /api/products/:productId
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -676,7 +560,7 @@ Deletes an existing spot.
     }
     ```
 
-* Error response: Couldn't find a Spot with the specified id
+* Error response: Couldn't find a Product with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -684,7 +568,7 @@ Deletes an existing spot.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Product couldn't be found"
     }
     ```
 
@@ -718,41 +602,31 @@ Returns all the reviews written by the current user.
         {
           "id": 1,
           "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
           "stars": 5,
+          "review": "This was an awesome spot!",
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
+          "Users": {
             "id": 1,
             "firstName": "John",
             "lastName": "Smith"
           },
-          "Spot": {
+          "Product": {
             "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
+            "sellerId": 1,
+            "itemName": "Spiked Collar",
+            "price": 15.99,
+            "description": "Black pleather spiked collar will attract the attention you seek!",
+            "quantity": 3,
+            "previewImage": "image url",
+            "category": "jewelry",
           },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
         }
       ]
     }
     ```
 
-### Get all Reviews by a Spot's id
+### Get all Reviews by a Products's id
 
 Returns all the reviews that belong to a spot specified by id.
 
@@ -760,7 +634,7 @@ Returns all the reviews that belong to a spot specified by id.
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/spots/:spotId/reviews
+  * URL: /api/products/:productId/reviews
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -780,9 +654,8 @@ Returns all the reviews that belong to a spot specified by id.
         {
           "id": 1,
           "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
           "stars": 5,
+          "review": "This was an awesome spot!",
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36" ,
           "User": {
@@ -790,18 +663,12 @@ Returns all the reviews that belong to a spot specified by id.
             "firstName": "John",
             "lastName": "Smith"
           },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ],
         }
       ]
     }
     ```
 
-* Error response: Couldn't find a Spot with the specified id
+* Error response: Couldn't find a Review with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -809,11 +676,11 @@ Returns all the reviews that belong to a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Review couldn't be found"
     }
     ```
 
-### Create a Review for a Spot based on the Spot's id
+### Create a Review for a Product based on the Product's id
 
 Create and return a new review for a spot specified by id.
 
