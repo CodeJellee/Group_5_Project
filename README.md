@@ -715,11 +715,10 @@ Create and return a new review for a spot specified by id.
     {
       "id": 1,
       "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
       "stars": 5,
+      "review": "This was an awesome spot!",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+      "updatedAt": "2021-11-19 20:39:36" ,
     }
     ```
 
@@ -739,7 +738,7 @@ Create and return a new review for a spot specified by id.
     }
     ```
 
-* Error response: Couldn't find a Spot with the specified id
+* Error response: Couldn't find a Product with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -747,11 +746,11 @@ Create and return a new review for a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Product couldn't be found"
     }
     ```
 
-* Error response: Review from the current user already exists for the Spot
+* Error response: Review from the current user already exists for the Product
   * Status Code: 500
   * Headers:
     * Content-Type: application/json
@@ -759,70 +758,7 @@ Create and return a new review for a spot specified by id.
 
     ```json
     {
-      "message": "User already has a review for this spot"
-    }
-    ```
-
-### Add an Image to a Review based on the Review's id
-
-Create and return a new image for a review specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  <!--!!START SILENT -->
-  * Method: POST
-  * URL: /api/reviews/:reviewId/images
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url"
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-* Error response: Cannot add any more images because there is a maximum of 10
-  images per resource
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Maximum number of images for this resource was reached"
+      "message": "User already has a review for this Product"
     }
     ```
 
@@ -862,11 +798,10 @@ Update and return an existing review.
     {
       "id": 1,
       "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
       "stars": 5,
+      "review": "This was an awesome spot!",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "updatedAt": "2021-11-19 20:39:36" ,
     }
     ```
 
@@ -939,17 +874,17 @@ Delete an existing review.
     }
     ```
 
-## BOOKINGS
+## Shopping Cart
 
-### Get all of the Current User's Bookings
+### Get all of the Current User's Shopping Cart
 
-Return all the bookings that the current user has made.
+Return all the shopping cart that the current user has made.
 
 * Require Authentication: true
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/bookings/current
+  * URL: /api/shopping_cart/current
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -965,287 +900,26 @@ Return all the bookings that the current user has made.
 
     ```json
     {
-      "Bookings": [
+      "Shopping Cart": [
         {
           "id": 1,
-          "spotId": 1,
-          "Spot": {
+          "userId": 2,
+          "Products": [
+            {
             "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
+            "sellerId": 1,
+            "itemName": "Spiked Collar",
+            "price": 15.99,
+            "description": "Black pleather spiked collar will attract the attention you seek!",
+            "quantity": 3,
+            "previewImage": "image url",
+            "category": "jewelry",
+            }
+          ],
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36"
         }
       ]
-    }
-    ```
-
-### Get all Bookings for a Spot based on the Spot's id
-
-Return all the bookings for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  <!--!!START SILENT -->
-  * Method: GET
-  * URL: /api/spots/:spotId/bookings
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Body: none
-
-* Successful Response: If you ARE NOT the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "spotId": 1,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20"
-        }
-      ]
-    }
-    ```
-
-* Successful Response: If you ARE the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "User": {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "id": 1,
-          "spotId": 1,
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Create a Booking from a Spot based on the Spot's id
-
-Create and return a new booking from a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must NOT belong to the current user
-* Request
-  <!--!!START SILENT -->
-  * Method: POST
-  * URL: /api/spots/:spotId/bookings
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Edit a Booking
-
-Update and return an existing booking.
-
-* Require Authentication: true
-* Require proper authorization: Booking must belong to the current user
-* Request
-  <!--!!START SILENT -->
-  * Method: PUT
-  * URL: /api/bookings/:bookingId
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "endDate": "endDate cannot come before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Booking with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-* Error response: Can't edit a booking that's past the end date
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Past bookings can't be modified"
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
     }
     ```
 
