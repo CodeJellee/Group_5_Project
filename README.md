@@ -347,7 +347,7 @@ Returns all the products owned (created) by the current user.
 
 ### Get details of a Product from an id
 
-Returns the details of a spot specified by its id.
+Returns the details of a product specified by its id.
 
 * Require Authentication: false
 * Request
@@ -603,7 +603,7 @@ Returns all the reviews written by the current user.
           "id": 1,
           "userId": 1,
           "stars": 5,
-          "review": "This was an awesome spot!",
+          "review": "This was an awesome product!",
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36" ,
           "Users": {
@@ -628,7 +628,7 @@ Returns all the reviews written by the current user.
 
 ### Get all Reviews by a Products's id
 
-Returns all the reviews that belong to a spot specified by id.
+Returns all the reviews that belong to a product specified by id.
 
 * Require Authentication: false
 * Request
@@ -655,7 +655,7 @@ Returns all the reviews that belong to a spot specified by id.
           "id": 1,
           "userId": 1,
           "stars": 5,
-          "review": "This was an awesome spot!",
+          "review": "This was an awesome product!",
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36" ,
           "User": {
@@ -682,13 +682,13 @@ Returns all the reviews that belong to a spot specified by id.
 
 ### Create a Review for a Product based on the Product's id
 
-Create and return a new review for a spot specified by id.
+Create and return a new review for a product specified by id.
 
 * Require Authentication: true
 * Request
   <!--!!START SILENT -->
   * Method: POST
-  * URL: /api/spots/:spotId/reviews
+  * URL: /api/products/:productId/reviews
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -700,7 +700,7 @@ Create and return a new review for a spot specified by id.
 
     ```json
     {
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome product!",
       "stars": 5,
     }
     ```
@@ -716,7 +716,7 @@ Create and return a new review for a spot specified by id.
       "id": 1,
       "userId": 1,
       "stars": 5,
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome product!",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36" ,
     }
@@ -783,7 +783,7 @@ Update and return an existing review.
 
     ```json
     {
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome product!",
       "stars": 5,
     }
     ```
@@ -799,7 +799,7 @@ Update and return an existing review.
       "id": 1,
       "userId": 1,
       "stars": 5,
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome product!",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36" ,
     }
@@ -884,7 +884,7 @@ Return all the shopping cart that the current user has made.
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/shopping_cart/current
+  * URL: /api/shopping_cart
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -923,17 +923,17 @@ Return all the shopping cart that the current user has made.
     }
     ```
 
-### Delete a Booking
+### Delete a Shopping Cart Item
 
-Delete an existing booking.
+Delete an existing cartId.
 
 * Require Authentication: true
-* Require proper authorization: Booking must belong to the current user or the
-  Spot must belong to the current user
+* Require proper authorization: Shopping Cart must belong to the current user or the
+  cart item must belong to the current user
 * Request
   <!--!!START SILENT -->
   * Method: DELETE
-  * URL: /api/bookings/:bookingId
+  * URL: /api/shopping_cart/:productId
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -953,7 +953,7 @@ Delete an existing booking.
     }
     ```
 
-* Error response: Couldn't find a Booking with the specified id
+* Error response: Couldn't find an item with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -961,34 +961,22 @@ Delete an existing booking.
 
     ```json
     {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-* Error response: Bookings that have been started can't be deleted
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bookings that have been started can't be deleted"
+      "message": "Item couldn't be found"
     }
     ```
 
 ## IMAGES
 
-### Delete a Spot Image
+### Delete a Product Image
 
-Delete an existing image for a Spot.
+Delete an existing image for a Product.
 
 * Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
+* Require proper authorization: Product must belong to the current user
 * Request
   <!--!!START SILENT -->
   * Method: DELETE
-  * URL: /api/spot-images/:imageId
+  * URL: /api/product-image/:imageId
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -1008,7 +996,7 @@ Delete an existing image for a Spot.
     }
     ```
 
-* Error response: Couldn't find a Spot Image with the specified id
+* Error response: Couldn't find a Product Image with the specified id
   * Status Code: 404
   * Headers:
     * Content-Type: application/json
@@ -1016,60 +1004,19 @@ Delete an existing image for a Spot.
 
     ```json
     {
-      "message": "Spot Image couldn't be found"
+      "message": "Product Image couldn't be found"
     }
     ```
 
-### Delete a Review Image
+## Add Query Filters to Get All Products
 
-Delete an existing image for a Review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  <!--!!START SILENT -->
-  * Method: DELETE
-  * URL: /api/review-images/:imageId
-  <!--!!END -->
-  <!--!!ADD -->
-  <!-- * Method: ? -->
-  <!-- * URL: ? -->
-  <!--!!END_ADD -->
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-* Error response: Couldn't find a Review Image with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review Image couldn't be found"
-    }
-    ```
-
-## Add Query Filters to Get All Spots
-
-Return spots filtered by query parameters.
+Return products filtered by query parameters.
 
 * Require Authentication: false
 * Request
   <!--!!START SILENT -->
   * Method: GET
-  * URL: /api/spots
+  * URL: /api/products
   <!--!!END -->
   <!--!!ADD -->
   <!-- * Method: ? -->
@@ -1078,10 +1025,6 @@ Return spots filtered by query parameters.
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20
-    * minLat: decimal, optional
-    * maxLat: decimal, optional
-    * minLng: decimal, optional
-    * maxLng: decimal, optional
     * minPrice: decimal, optional, minimum: 0
     * maxPrice: decimal, optional, minimum: 0
   * Body: none
@@ -1094,23 +1037,14 @@ Return spots filtered by query parameters.
 
     ```json
     {
-      "Spots": [
+      "Products": [
         {
           "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
+          "itemName": "Spiked Collar",
+          "price": 15.99,
+          "description": "Black pleather spiked collar will attract the attention you seek!",
+          "previewImage": "image url",
+          "category": "jewelry"
         }
       ],
       "page": 2,
@@ -1130,12 +1064,155 @@ Return spots filtered by query parameters.
       "errors": {
         "page": "Page must be greater than or equal to 1",
         "size": "Size must be greater than or equal to 1",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
         "minPrice": "Minimum price must be greater than or equal to 0",
-        "maxPrice": "Maximum price must be greater than or equal to 0"
+        "maxPrice": "Maximum price must be greater than or equal to 0",
+        "itemName": "Item name is required",
+        "price": "Price is required",
+        "description": "Description is required",
+        "quantity": "Quantity is required",
+        "previewImage": "Preview image is required",
+        "category": "Category is required",
       }
+    }
+    ```
+### Get all Favorites by Current User
+
+Returns all the Favorite Items that belong to the Current User
+
+* Require Authentication: True
+* Request
+  <!--!!START SILENT -->
+  * Method: GET
+  * URL: /api/favorites/current
+  <!--!!END -->
+  <!--!!ADD -->
+  <!-- * Method: ? -->
+  <!-- * URL: ? -->
+  <!--!!END_ADD -->
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Favorites": [
+        {
+          "id": 1,
+          "userId": 1,
+          "productId": 1,
+          "User": {
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Smith"
+          },
+          "Product": {
+            "id": 1,
+            "productId": 1,
+            "itemName": "Spiked Collar",
+            "price": 15.99,
+            "description": "Black pleather spiked collar will attract the attention you seek!",
+            "previewImage": "image url",
+            "category": "jewelry"
+          }
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a favorite item belonging to the current user
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Favorites couldn't be found"
+    }
+    ```
+
+
+### (POST) Favorite an Item
+
+Favorites an item for the current user
+
+* Require Authentication: True
+* Request
+  <!--!!START SILENT -->
+  * Method: GET
+  * URL: /api/products/:productId
+  <!--!!END -->
+  <!--!!ADD -->
+  <!-- * Method: ? -->
+  <!-- * URL: ? -->
+  <!--!!END_ADD -->
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "You've successfully favorited this item."
+    }
+    ```
+
+* Error response: Couldn't find a favorite item belonging to the current user
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Item couldn't be found"
+    }
+    ```
+
+
+### Delete a Favorite by Current User
+
+Delete a Favorite by Current User
+
+* Require Authentication: True
+* Request
+  <!--!!START SILENT -->
+  * Method: GET
+  * URL: /api/favorites/:productId
+  <!--!!END -->
+  <!--!!ADD -->
+  <!-- * Method: ? -->
+  <!-- * URL: ? -->
+  <!--!!END_ADD -->
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted"
+    }
+    ```
+
+* Error response: Couldn't find a favorite item belonging to the current user
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Favorite couldn't be found"
     }
     ```
