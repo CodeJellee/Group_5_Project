@@ -8,9 +8,9 @@
 ## Database Schema Design
 
 <!--!!START SILENT -->
-![group5-database-schema]
+[group5-database-schema]: https://cdn.discordapp.com/attachments/1133156281809637466/1133787164501606540/image.png
 
-[group5-database-schema]: ./images/group5-database-schema.png
+![group5-database-schema]: ./images/group5-database-schema.png
 <!--!!END -->
 <!--!!ADD -->
 <!-- `<insert database schema design here>` -->
@@ -1136,14 +1136,14 @@ Returns all the Favorite Items that belong to the Current User
     ```
 
 
-### (POST) Favorite an Item
+### Favorite an Item
 
 Favorites an item for the current user
 
 * Require Authentication: True
 * Request
   <!--!!START SILENT -->
-  * Method: GET
+  * Method: POST
   * URL: /api/products/:productId
   <!--!!END -->
   <!--!!ADD -->
@@ -1184,7 +1184,7 @@ Delete a Favorite by Current User
 * Require Authentication: True
 * Request
   <!--!!START SILENT -->
-  * Method: GET
+  * Method: DELETE
   * URL: /api/favorites/:productId
   <!--!!END -->
   <!--!!ADD -->
