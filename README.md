@@ -10,7 +10,9 @@
 <!--!!START SILENT -->
 [group5-database-schema]: https://cdn.discordapp.com/attachments/1133156281809637466/1133787164501606540/image.png
 
-<!-- ![group5-database-schema]: ./images/group5-database-schema.png -->
+![group5-database-schema]
+
+<!-- ./images/group5-database-schema.png -->
 <!--!!END -->
 <!--!!ADD -->
 <!-- `<insert database schema design here>` -->
